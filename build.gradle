@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+}
+
+group 'pdpl.tubes'  // Replace with your desired group ID
+version '1.0-SNAPSHOT'
+
+repositories {
+    maven {
+        url = uri("https://repo.papermc.io/repository/maven-public/")
+    }
+}
+
+dependencies {
+    compileOnly("io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
+}
+
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'ModEntry'  // Replace with your main class path
+    }
+
+    // Include the plugin.yml in the JAR file
+    from('plugin.yml') {
+        into('/')
+    }
+}
