@@ -1,16 +1,22 @@
 import org.bukkit.plugin.java.JavaPlugin;
 
-import EventListeners.TntEventListener;
+import CommandHandlers.DetonateHandler;
+import CommandHandlers.SetTntHandler;
+import EventListeners.*;
 
 public class ModEntry extends JavaPlugin {
+    // TODO: Check if tnt is removed
     @Override
     public void onEnable() {
-        getServer().getPluginManager().registerEvents(TntEventListener.getInstance(), this);
-        getLogger().warning("Enabling Detonators plugin...");
+        getLogger().info("Enabling Detonators plugin...");
+        getServer().getPluginManager().registerEvents(PlayerRClickListener.getInstance(), this);
+
+        getCommand("settnt").setExecutor(new SetTntHandler());
+        getCommand("detonate").setExecutor(new DetonateHandler());
     }
     
     @Override
     public void onDisable() {
-        getLogger().warning("Disabling Detonators plugin...");
+        getLogger().info("Disabling Detonators plugin...");
     }
 }

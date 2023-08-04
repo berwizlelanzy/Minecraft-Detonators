@@ -4,3 +4,12 @@ main: ModEntry  # Replace with your main class path
 author: 2072003 2072004 2072042
 description: aaaaaaaaaaaaaaaaaaaaa
 api-version: 1.20
+
+commands:
+  settnt:
+    description: turns on right-click setting on a tnt (Must be run in-game)
+    usage: /settnt
+
+  detonate:
+    description: detonates a tnt (Must be run in-game)
+    usage: /detonate {remote|code}
