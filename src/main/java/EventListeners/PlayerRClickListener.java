@@ -10,7 +10,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import Fuzes.RemoteFuze;
-import Remote.RemoteBroadcaster;
 import Tnt.Tnt;
 
 public class PlayerRClickListener implements Listener {
@@ -54,8 +53,9 @@ public class PlayerRClickListener implements Listener {
 
             if (this.mode.equals("remote")) {
                 Tnt tnt = new Tnt(new RemoteFuze(tntBlock));
-                RemoteBroadcaster broadcaster = RemoteBroadcaster.getInstance();
-                broadcaster.addRemote((RemoteFuze) tnt.getFuze());
+                TntDestroyListener destroyListener = TntDestroyListener.getInstance();
+                destroyListener.addTnt(tnt);
+
                 player.sendMessage("Tnt added to remote list.");
                 this.mode = "";
             }

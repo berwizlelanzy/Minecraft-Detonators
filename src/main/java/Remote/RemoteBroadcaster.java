@@ -2,6 +2,9 @@ package Remote;
 
 import java.util.Vector;
 
+import EventListeners.TntDestroyListener;
+import Fuzes.Enums.FuzeType;
+
 public class RemoteBroadcaster {
     private static RemoteBroadcaster instance;
     private Vector<RemoteObserver> observers;
@@ -23,12 +26,20 @@ public class RemoteBroadcaster {
         this.observers.add(observer);
     }
 
-    public void removeRemote(RemoteObserver observer){
-        this.observers.remove(observer);
+    public boolean removeRemote(RemoteObserver observer){
+        for (int i = 0; i < this.observers.size(); i++) {
+            if (this.observers.get(i).equals(observer)) {
+                this.observers.removeElementAt(i);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void fire() {
         this.observers.forEach(RemoteObserver::fire);
+        TntDestroyListener.getInstance().clearTnt(FuzeType.FUZE_REMOTE);
         this.observers.clear(); // Hapus lagi remotenya kalo udh
     }
 }
