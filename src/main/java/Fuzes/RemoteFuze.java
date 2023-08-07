@@ -1,27 +1,25 @@
 package Fuzes;
 
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-
 import Remote.RemoteObserver;
+import Tnt.Detonatable;
 
-public class RemoteFuze extends Fuze implements RemoteObserver{
-    public RemoteFuze(Block block) {
-        super(block);
-    }
-
-    @Override
-    public void detonate() {
-        final double x = this.getBlock().getX();
-        final double y = this.getBlock().getY();
-        final double z = this.getBlock().getZ();
-
-        this.getBlock().setType(Material.AIR);
-        this.getBlock().getWorld().createExplosion(x, y, z, 4F, false, true);
-    }
+public class RemoteFuze implements Fuze, RemoteObserver{
+    private Detonatable detonator;
 
     @Override
     public void fire() {
-        this.detonate();
+        if (this.detonator != null) {
+            this.detonator.detonate();
+        }
+    }
+
+    @Override
+    public void addDetonator(Detonatable detonator) {
+        this.detonator = detonator;
+    }
+
+    @Override
+    public void removeDetonator(Detonatable detonator) {
+        this.detonator = null;
     }
 }

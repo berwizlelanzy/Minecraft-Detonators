@@ -52,7 +52,7 @@ public class PlayerRClickListener implements Listener {
             Player player = e.getPlayer();
 
             if (this.mode.equals("remote")) {
-                Tnt tnt = new Tnt(new RemoteFuze(tntBlock));
+                Tnt tnt = new Tnt(tntBlock, new RemoteFuze());
                 TntDestroyListener destroyListener = TntDestroyListener.getInstance();
                 destroyListener.addTnt(tnt);
 
