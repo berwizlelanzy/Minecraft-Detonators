@@ -17,3 +17,7 @@ commands:
   detonate:
     description: detonates a tnt (Must be run in-game)
     usage: /detonate {remote|code}
+
+  tnttimer:
+    description: sets a timer fuze on a tnt (Must be run in-game)
+    usage: /tnttimer {secs}

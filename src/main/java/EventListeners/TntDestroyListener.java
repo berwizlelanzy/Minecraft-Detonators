@@ -12,6 +12,7 @@ import Fuzes.RemoteFuze;
 import Fuzes.Enums.FuzeType;
 import Remote.RemoteBroadcaster;
 import Tnt.Tnt;
+import net.md_5.bungee.api.ChatColor;
 
 public class TntDestroyListener implements Listener {
     private static TntDestroyListener instance;
@@ -85,7 +86,7 @@ public class TntDestroyListener implements Listener {
         }
 
         if (removed) {
-            e.getPlayer().sendMessage("Tnt fuze removed");
+            e.getPlayer().sendMessage(ChatColor.GREEN + "Tnt fuze removed");
         }
     }
 }

@@ -28,11 +28,11 @@ public class CodeHandler implements CommandExecutor {
         PlayerRClickListener listener = PlayerRClickListener.getInstance();
         if (listener.mode == "code") {
             listener.mode = "";
-            listener.code = "";
+            listener.arg = "";
             sender.sendMessage("Code R-CLick interact disabled");
         } else {
             listener.mode = "code";
-            listener.code = args[0];
+            listener.arg = args[0];
             sender.sendMessage("Code R-Click interact enabled");
         }
         

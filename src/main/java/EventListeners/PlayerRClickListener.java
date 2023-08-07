@@ -11,12 +11,14 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import Fuzes.CodeFuzeFactory;
 import Fuzes.RemoteFuze;
+import Fuzes.TimeFuze;
 import Tnt.Tnt;
+import net.md_5.bungee.api.ChatColor;
 
 public class PlayerRClickListener implements Listener {
     private static PlayerRClickListener instance;
     public String mode;
-    public String code;
+    public String arg;
 
     private PlayerRClickListener(){
         this.mode = "";
@@ -46,7 +48,7 @@ public class PlayerRClickListener implements Listener {
 
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getPlayer().getGameMode() == GameMode.CREATIVE) {
             if (!this.checkBlock(e.getClickedBlock())) {
-                e.getPlayer().sendMessage("Please right-click on a tnt!");
+                e.getPlayer().sendMessage(ChatColor.RED + "Please right-click on a tnt!");
                 return;
             }
 
@@ -58,19 +60,36 @@ public class PlayerRClickListener implements Listener {
                 TntDestroyListener destroyListener = TntDestroyListener.getInstance();
                 destroyListener.addTnt(tnt);
 
-                player.sendMessage("Tnt added to remote list.");
+                player.sendMessage(ChatColor.YELLOW + "Tnt added to remote list.");
                 this.mode = "";
             } else if (this.mode.equals("code")) {
-                if (this.code == null) {
+                if (this.arg == null) {
                     e.getPlayer().sendMessage("Null code!");
                     return;
                 }
-                Tnt tnt = new Tnt(tntBlock, CodeFuzeFactory.getInstance().getFuze(this.code));
+
+                Tnt tnt = new Tnt(tntBlock, CodeFuzeFactory.getInstance().getFuze(this.arg));
                 TntDestroyListener destroyListener = TntDestroyListener.getInstance();
                 destroyListener.addTnt(tnt);
 
-                player.sendMessage("Tnt code set!");
+                player.sendMessage(ChatColor.YELLOW + "Tnt code set!");
                 this.mode = "";
+                this.arg = "";
+            } else if (this.mode.equals("time")) {
+                Tnt tnt = new Tnt(tntBlock, new TimeFuze());
+                TntDestroyListener destroyListener = TntDestroyListener.getInstance();
+                destroyListener.addTnt(tnt);
+                
+                player.sendMessage(ChatColor.YELLOW + "Tnt will explode " + arg + " sec(s) from now!");
+
+                try {
+                    ((TimeFuze) tnt.getFuze()).beginCountdown(Integer.parseInt(arg));
+                } catch (NumberFormatException e1) {
+                    e1.printStackTrace();
+                }
+
+                this.mode = "";
+                this.arg = "";
             }
         }   
     }

@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import Fuzes.CodeFuze;
 import Fuzes.CodeFuzeFactory;
 import Remote.RemoteBroadcaster;
+import net.md_5.bungee.api.ChatColor;
 
 public class DetonateHandler implements CommandExecutor{
     @Override
@@ -19,19 +20,19 @@ public class DetonateHandler implements CommandExecutor{
         }
 
         if (args[0].equals("remote")) {
-            sender.sendMessage("Detonating remote fuzes");
+            sender.sendMessage(ChatColor.RED + "Detonating remote fuzes");
             RemoteBroadcaster.getInstance().fire();
         } else {
             final String code = args[0];
             if (code.length() != 4) {
-                sender.sendMessage("Code must be 4 digits long!");
+                sender.sendMessage(ChatColor.RED + "Code must be 4 digits long!");
                 return true;
             }
             
             Vector<CodeFuze> codeFuzes = CodeFuzeFactory.getInstance().getFuzeList();
             for (CodeFuze codeFuze : codeFuzes) {
                 if (codeFuze.getCode().equals(code)) {
-                    sender.sendMessage("Detonating code: " + code + " fuzes");
+                    sender.sendMessage(ChatColor.RED + "Detonating code: " + code + " fuzes");
                     codeFuze.trigger();
                 }
             }
