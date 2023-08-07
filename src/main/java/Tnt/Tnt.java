@@ -23,6 +23,14 @@ public class Tnt implements Detonatable {
         return this.fuze;
     }
 
+    public void disarmFuze() {
+        this.fuze.removeDetonator();
+    }
+
+    public void armFuze() {
+        this.fuze.addDetonator(this::detonate);
+    }
+
     @Override
     public void detonate() {
         this.block.setType(Material.AIR);

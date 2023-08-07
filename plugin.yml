@@ -10,6 +10,10 @@ commands:
     description: turns on right-click setting on a tnt (Must be run in-game)
     usage: /settnt
 
+  setcode:
+    description: turns on right-click code setting on a tnt (MUst be run in-game) (Code must be 4 digits)
+    usage: /setcode {code}
+
   detonate:
     description: detonates a tnt (Must be run in-game)
     usage: /detonate {remote|code}

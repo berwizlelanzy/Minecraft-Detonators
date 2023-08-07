@@ -19,7 +19,7 @@ public class RemoteFuze implements Fuze, RemoteObserver{
     }
 
     @Override
-    public void removeDetonator(Detonatable detonator) {
+    public void removeDetonator() {
         this.detonator = null;
     }
 }

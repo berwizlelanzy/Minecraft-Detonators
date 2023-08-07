@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
+import Fuzes.CodeFuze;
 import Fuzes.RemoteFuze;
 import Fuzes.Enums.FuzeType;
 import Remote.RemoteBroadcaster;
@@ -29,14 +30,25 @@ public class TntDestroyListener implements Listener {
     }
 
     private boolean removeTnt(Tnt tnt) {
-        boolean fuzeDisarmed = false;
+        boolean removed = false;
 
         if (tnt.getFuze() instanceof RemoteFuze) {
             RemoteBroadcaster broadcaster = RemoteBroadcaster.getInstance();
-            fuzeDisarmed = broadcaster.removeRemote((RemoteFuze) tnt.getFuze());
+            broadcaster.removeRemote((RemoteFuze) tnt.getFuze());
+            removed = this.tnts.remove(tnt);
+        } else if (tnt.getFuze() instanceof CodeFuze) {
+            final String code = ((CodeFuze) tnt.getFuze()).getCode();
+            removed = this.tnts.remove(tnt);
+            tnt.disarmFuze();
+
+            for (Tnt tnt2 : this.tnts) {
+                if (tnt2.getFuze() instanceof CodeFuze && ((CodeFuze) tnt2.getFuze()).getCode().equals(code)) {
+                    tnt2.armFuze();
+                }
+            }
         }
         
-        return this.tnts.remove(tnt) && fuzeDisarmed;
+        return removed;
     }
 
     public void addTnt(Tnt tnt) {
@@ -52,6 +64,8 @@ public class TntDestroyListener implements Listener {
     public void clearTnt(FuzeType fuzeType) {
         if (fuzeType.equals(FuzeType.FUZE_REMOTE)) {
             this.tnts.removeIf(tnt -> tnt.getFuze() instanceof RemoteFuze);
+        } else if (fuzeType.equals(FuzeType.FUZE_CODE)) {
+            this.tnts.removeIf(tnt -> tnt.getFuze() instanceof CodeFuze);
         }
     }
 
