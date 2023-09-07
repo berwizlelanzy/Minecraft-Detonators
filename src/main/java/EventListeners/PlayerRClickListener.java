@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import Builder.TntBuilder;
 import Fuzes.CodeFuzeFactory;
 import Fuzes.RemoteFuze;
 import Fuzes.TimeFuze;
@@ -56,7 +57,12 @@ public class PlayerRClickListener implements Listener {
             Player player = e.getPlayer();
 
             if (this.mode.equals("remote")) {
-                Tnt tnt = new Tnt(tntBlock, new RemoteFuze());
+                // Tnt tnt = new Tnt(tntBlock, new RemoteFuze());
+                TntBuilder builder = new TntBuilder();
+                builder.setBlock(tntBlock);
+                builder.setFuze(new RemoteFuze());
+                Tnt tnt = builder.build();
+
                 TntDestroyListener destroyListener = TntDestroyListener.getInstance();
                 destroyListener.addTnt(tnt);
 
@@ -68,7 +74,12 @@ public class PlayerRClickListener implements Listener {
                     return;
                 }
 
-                Tnt tnt = new Tnt(tntBlock, CodeFuzeFactory.getInstance().getFuze(this.arg));
+                // Tnt tnt = new Tnt(tntBlock, CodeFuzeFactory.getInstance().getFuze(this.arg));
+                TntBuilder builder = new TntBuilder();
+                builder.setBlock(tntBlock);
+                builder.setFuze(CodeFuzeFactory.getInstance().getFuze(this.arg));
+                Tnt tnt = builder.build();
+                
                 TntDestroyListener destroyListener = TntDestroyListener.getInstance();
                 destroyListener.addTnt(tnt);
 
