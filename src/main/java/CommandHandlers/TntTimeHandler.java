@@ -5,14 +5,20 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-import EventListeners.PlayerRClickListener;
+import Commands.CommandPattern;
+import Commands.SetTimeCommand;
 import net.md_5.bungee.api.ChatColor;
 
 public class TntTimeHandler implements CommandExecutor {
     private CommandChecker checker;
+    private CommandPattern command;
 
     public TntTimeHandler() {
         this.checker = new CommandChecker();
+    }
+
+    public void setCommand(CommandPattern cmd) {
+        this.command = cmd;
     }
 
 	@Override
@@ -23,17 +29,18 @@ public class TntTimeHandler implements CommandExecutor {
             return false;
         }
 
-        PlayerRClickListener listener = PlayerRClickListener.getInstance();
-        if (listener.mode == "time") {
-            listener.mode = "";
-            listener.arg = "";
-            sender.sendMessage("Time R-Click interact disabled");
-        } else {
-            listener.mode = "time";
-            listener.arg = args[0];
-            sender.sendMessage("Time R-Click interact enabled");
-            sender.sendMessage(ChatColor.RED + "Warning: Timed tnt can't be defused!");
+        if (this.command == null) {
+            sender.sendMessage(ChatColor.RED + "No command specified!");
+            return true;
         }
+
+        try {
+            ((SetTimeCommand) this.command).setParam(Integer.parseInt(args[0]));
+        } catch (NumberFormatException e) {
+            sender.sendMessage(ChatColor.RED + "Please provide a valid number!");
+        }
+
+        this.command.execute();
 
 		return true;
 	}

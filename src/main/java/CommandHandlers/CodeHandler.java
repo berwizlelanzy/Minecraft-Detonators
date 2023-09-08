@@ -5,13 +5,20 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-import EventListeners.PlayerRClickListener;
+import Commands.CommandPattern;
+import Commands.SetCodeCommand;
+import net.md_5.bungee.api.ChatColor;
 
 public class CodeHandler implements CommandExecutor {
     private CommandChecker checker;
+    private CommandPattern command;
 
     public CodeHandler() {
         this.checker = new CommandChecker();
+    }
+
+    public void setCommand(CommandPattern cmd) {
+        this.command = cmd;
     }
     
     @Override
@@ -25,16 +32,13 @@ public class CodeHandler implements CommandExecutor {
             return true;
         }
 
-        PlayerRClickListener listener = PlayerRClickListener.getInstance();
-        if (listener.mode == "code") {
-            listener.mode = "";
-            listener.arg = "";
-            sender.sendMessage("Code R-CLick interact disabled");
-        } else {
-            listener.mode = "code";
-            listener.arg = args[0];
-            sender.sendMessage("Code R-Click interact enabled");
+        if (this.command == null) {
+            sender.sendMessage(ChatColor.RED + "No command specified!");
+            return true;
         }
+
+        ((SetCodeCommand) this.command).setParam(args[0]);
+        this.command.execute();
         
         return true;
     }
