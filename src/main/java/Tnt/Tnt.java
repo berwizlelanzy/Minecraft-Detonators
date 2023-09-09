@@ -1,22 +1,18 @@
 package Tnt;
 
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-
+import ExplosionTypes.ExplosionType;
 import Fuzes.Fuze;
 
 public class Tnt implements Detonatable {
     private Fuze fuze;
-    private Block block;
+    private ExplosionType explosionType;
+    private ExplosionMemento memento;
 
-    public Tnt(Block block, Fuze fuze) {
-        this.block = block;
+    public Tnt(Fuze fuze, ExplosionType explosionType) {
         this.fuze = fuze;
         this.fuze.addDetonator(this::detonate);
-    }
-
-    public Block getBlock() {
-        return this.block;
+        this.explosionType = explosionType;
+        this.memento = new ExplosionMemento();
     }
 
     public Fuze getFuze() {
@@ -31,13 +27,25 @@ public class Tnt implements Detonatable {
         this.fuze.addDetonator(this::detonate);
     }
 
+    public void setExpType(ExplosionType type) {
+        this.memento.add(type);
+        this.explosionType = type;
+    }
+
+    public void undoExpType() {
+        ExplosionType type = this.memento.undo();
+        
+        if (type != null) {
+            this.explosionType = type;
+        }
+    }
+
+    public ExplosionType getExpType() {
+        return this.explosionType;
+    }
+
     @Override
     public void detonate() {
-        this.block.setType(Material.AIR);
-        final int x = this.getBlock().getX();
-        final int y = this.getBlock().getY();
-        final int z = this.getBlock().getZ();
-
-        this.getBlock().getWorld().createExplosion(x, y, z, 4F, false, true);
+        this.explosionType.explode();
     }
 }

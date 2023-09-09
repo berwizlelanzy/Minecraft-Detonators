@@ -2,12 +2,15 @@ package Builder;
 
 import org.bukkit.block.Block;
 
+import ExplosionTypes.ExplosionType;
+import ExplosionTypes.NormalExplosion;
 import Fuzes.Fuze;
 import Tnt.Tnt;
 
 public class TntBuilder {
     private Fuze fuze;
     private Block block;
+    private ExplosionType type;
 
     public void setFuze(Fuze fuze){
         this.fuze = fuze;
@@ -17,7 +20,16 @@ public class TntBuilder {
         this.block = block;
     }
 
+    public void setExpType(ExplosionType type) {
+        this.type = type;
+    }
+
     public Tnt build(){
-        return new Tnt(block, fuze);
+        if (this.type == null) {
+            // Defaults to normal explosion
+            return new Tnt(fuze, new NormalExplosion(block));
+        }
+
+        return new Tnt(fuze, type);
     }
 }

@@ -79,7 +79,7 @@ public class TntDestroyListener implements Listener {
         boolean removed = false;
 
         for (Tnt tnt : this.tnts) {
-            if (tnt.getBlock().equals(e.getBlock())) {
+            if (tnt.getExpType().getBlock().equals(e.getBlock())) {
                 removed = this.removeTnt(tnt);
                 break;
             }

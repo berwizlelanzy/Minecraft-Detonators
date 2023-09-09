@@ -25,7 +25,7 @@ public class CodeHandler implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!checker.check(sender, label)) {
             return true;
-        } else if (args.length == 0 || args.length > 1) {
+        } else if (args.length == 0 || args.length > 2) {
             return false;
         } else if (args[0].length() != 4) {
             sender.sendMessage("Code must be 4 digits long!");
@@ -38,6 +38,10 @@ public class CodeHandler implements CommandExecutor {
         }
 
         ((SetCodeCommand) this.command).setParam(args[0]);
+        if (args.length == 2) {
+            ((SetCodeCommand) this.command).setType(args[1]);
+        }
+        
         this.command.execute();
         
         return true;

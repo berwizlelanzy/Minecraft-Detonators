@@ -25,7 +25,7 @@ public class TntTimeHandler implements CommandExecutor {
 	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!this.checker.check(sender, label)) {
             return true;
-        } else if (args.length != 1) {
+        } else if (args.length > 2 || args.length == 0) {
             return false;
         }
 
@@ -36,6 +36,9 @@ public class TntTimeHandler implements CommandExecutor {
 
         try {
             ((SetTimeCommand) this.command).setParam(Integer.parseInt(args[0]));
+            if (args.length == 2) {
+                ((SetTimeCommand) this.command).setType(args[1]);
+            }
         } catch (NumberFormatException e) {
             sender.sendMessage(ChatColor.RED + "Please provide a valid number!");
         }

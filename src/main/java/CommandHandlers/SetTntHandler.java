@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 import Commands.CommandPattern;
+import Commands.SetTntCommand;
 import net.md_5.bungee.api.ChatColor;
 
 public class SetTntHandler implements CommandExecutor {
@@ -31,6 +32,10 @@ public class SetTntHandler implements CommandExecutor {
         if (this.command == null) {
             sender.sendMessage(ChatColor.RED + "No command specified!");
             return true;
+        }
+
+        if (args.length != 0){
+            ((SetTntCommand) this.command).setType(args[0]);
         }
 
         this.command.execute();
