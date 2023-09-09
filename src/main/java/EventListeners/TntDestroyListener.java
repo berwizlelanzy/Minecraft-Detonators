@@ -1,8 +1,7 @@
 package EventListeners;
 
-import java.util.Vector;
-
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -12,14 +11,17 @@ import Fuzes.RemoteFuze;
 import Fuzes.Enums.FuzeType;
 import Remote.RemoteBroadcaster;
 import Tnt.Tnt;
+import TntCollection.TntCollection;
+import TntCollection.TntElement;
+import TntCollection.TntIterator;
 import net.md_5.bungee.api.ChatColor;
 
 public class TntDestroyListener implements Listener {
     private static TntDestroyListener instance;
-    private Vector<Tnt> tnts;
+    private TntCollection tnts;
 
     private TntDestroyListener() {
-        this.tnts = new Vector<Tnt>();
+        this.tnts = new TntCollection();
     }
 
     public static TntDestroyListener getInstance() {
@@ -31,25 +33,7 @@ public class TntDestroyListener implements Listener {
     }
 
     private boolean removeTnt(Tnt tnt) {
-        boolean removed = false;
-
-        if (tnt.getFuze() instanceof RemoteFuze) {
-            RemoteBroadcaster broadcaster = RemoteBroadcaster.getInstance();
-            broadcaster.removeRemote((RemoteFuze) tnt.getFuze());
-            removed = this.tnts.remove(tnt);
-        } else if (tnt.getFuze() instanceof CodeFuze) {
-            final String code = ((CodeFuze) tnt.getFuze()).getCode();
-            removed = this.tnts.remove(tnt);
-            tnt.disarmFuze();
-
-            for (Tnt tnt2 : this.tnts) {
-                if (tnt2.getFuze() instanceof CodeFuze && ((CodeFuze) tnt2.getFuze()).getCode().equals(code)) {
-                    tnt2.armFuze();
-                }
-            }
-        }
-        
-        return removed;
+        return this.tnts.remove(tnt);
     }
 
     public void addTnt(Tnt tnt) {
@@ -63,10 +47,22 @@ public class TntDestroyListener implements Listener {
 
     // Used to clear tnts after detonation
     public void clearTnt(FuzeType fuzeType) {
+        TntIterator iter = this.tnts.createIterator();
+
         if (fuzeType.equals(FuzeType.FUZE_REMOTE)) {
-            this.tnts.removeIf(tnt -> tnt.getFuze() instanceof RemoteFuze);
+            while (iter.hasNext()) {
+                TntElement e = iter.getNext();
+                if (e.getTnt().getFuze() instanceof RemoteFuze) {
+                    this.removeTnt(e.getTnt());
+                }
+            }
         } else if (fuzeType.equals(FuzeType.FUZE_CODE)) {
-            this.tnts.removeIf(tnt -> tnt.getFuze() instanceof CodeFuze);
+            while (iter.hasNext()) {
+                TntElement e = iter.getNext();
+                if (e.getTnt().getFuze() instanceof CodeFuze) {
+                    this.removeTnt(e.getTnt());
+                }
+            }
         }
     }
 
@@ -78,15 +74,18 @@ public class TntDestroyListener implements Listener {
 
         boolean removed = false;
 
-        for (Tnt tnt : this.tnts) {
-            if (tnt.getExpType().getBlock().equals(e.getBlock())) {
+        TntIterator iter = this.tnts.createIterator();
+        while(iter.hasNext()) {
+            Tnt tnt = iter.getNext().getTnt();
+            Block tntBlock = tnt.getExpType().getBlock();
+            if (tntBlock.equals(e.getBlock())) {
                 removed = this.removeTnt(tnt);
                 break;
             }
         }
 
         if (removed) {
-            e.getPlayer().sendMessage(ChatColor.GREEN + "Tnt fuze removed");
+            e.getPlayer().sendMessage(ChatColor.GREEN + "Tnt fuze removed!");
         }
     }
 }
