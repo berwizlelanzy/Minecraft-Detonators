@@ -22,4 +22,9 @@ public class RemoteFuze implements Fuze, RemoteObserver{
     public void removeDetonator() {
         this.detonator = null;
     }
+
+    @Override
+	public void accept(Visitor v) {
+		v.visit(this);
+	}
 }

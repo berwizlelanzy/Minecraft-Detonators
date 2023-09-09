@@ -24,4 +24,9 @@ public class TimeFuze implements Fuze {
 
         this.detonator.detonate();
     }
+
+	@Override
+	public void accept(Visitor v) {
+		v.visit(this);
+	}
 }

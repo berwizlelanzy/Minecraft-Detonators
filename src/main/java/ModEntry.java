@@ -29,12 +29,16 @@ public class ModEntry extends JavaPlugin {
         UndoTypeHandler undoTypeHandler = new UndoTypeHandler();
         undoTypeHandler.setCommand(new UndoCommand());
 
+        DetonateAllHandler detonateAllHandler = new DetonateAllHandler();
+        detonateAllHandler.setCommand(new DetonateAllCommand());
+
         getCommand("settnt").setExecutor(tntHandler);
         getCommand("setcode").setExecutor(codeHandler);
         getCommand("detonate").setExecutor(detonateHandler);
         getCommand("tnttimer").setExecutor(tntTimeHandler);
         getCommand("changetype").setExecutor(changeTypeHandler);
         getCommand("undotype").setExecutor(undoTypeHandler);
+        getCommand("detonateall").setExecutor(detonateAllHandler);
     }
     
     @Override

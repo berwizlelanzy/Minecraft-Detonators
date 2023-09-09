@@ -41,4 +41,9 @@ public class CodeFuze implements Fuze {
         this.detonators.clear();
         TntDestroyListener.getInstance().clearTnt(FuzeType.FUZE_CODE);
     }
+
+    @Override
+	public void accept(Visitor v) {
+		v.visit(this);
+	}
 }

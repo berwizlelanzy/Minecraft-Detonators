@@ -29,3 +29,7 @@ commands:
   undotype:
     description: undo the change of explosion type of an TNT
     usage: /undotype
+
+  detonateall:
+    description: triggers all fuzes (Must be run in-game)
+    usage: /detonateall
