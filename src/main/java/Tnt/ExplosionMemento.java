@@ -7,6 +7,10 @@ import ExplosionTypes.ExplosionType;
 public class ExplosionMemento {
     private Vector<ExplosionType> history;
 
+    public ExplosionMemento() {
+        this.history = new Vector<ExplosionType>();
+    }
+
     public void add(ExplosionType type) {
         history.add(type);
     }

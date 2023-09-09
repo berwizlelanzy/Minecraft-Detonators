@@ -2,17 +2,17 @@ name: Minecraft_Detonators
 version: 1.0
 main: ModEntry  # Replace with your main class path
 author: 2072003 2072004 2072042
-description: aaaaaaaaaaaaaaaaaaaaa
+description: A plugin that allows you to detonate TNT in different ways
 api-version: 1.20
 
 commands:
   settnt:
     description: turns on right-click setting on a tnt (Must be run in-game)
-    usage: /settnt
+    usage: /settnt {type}
 
   setcode:
-    description: turns on right-click code setting on a tnt (MUst be run in-game) (Code must be 4 digits)
-    usage: /setcode {code}
+    description: turns on right-click code setting on a tnt (Must be run in-game) (Code must be 4 digits)
+    usage: /setcode {code} {type}
 
   detonate:
     description: detonates a tnt (Must be run in-game)
@@ -20,4 +20,12 @@ commands:
 
   tnttimer:
     description: sets a timer fuze on a tnt (Must be run in-game)
-    usage: /tnttimer {secs}
+    usage: /tnttimer {secs} {type}
+  
+  changetype:
+    description: change the explosion type of an TNT
+    usage: /changetype {type}
+
+  undotype:
+    description: undo the change of explosion type of an TNT
+    usage: /undotype

@@ -20,8 +20,9 @@ public class WaterExplosion implements ExplosionType {
         this.getBlock().getWorld().createExplosion(x, y, z, 4F, false, true);
     }
 
-    public LavaExplosion clone() {
-        LavaExplosion clone = new LavaExplosion(block);
+    @Override
+    public WaterExplosion clone() {
+        WaterExplosion clone = new WaterExplosion(block);
         return clone;
     }
 

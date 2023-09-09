@@ -20,6 +20,7 @@ public class LavaExplosion implements ExplosionType {
         this.getBlock().getWorld().createExplosion(x, y, z, 4F, false, true);
     }
 
+    @Override
     public LavaExplosion clone() {
         LavaExplosion clone = new LavaExplosion(block);
         return clone;

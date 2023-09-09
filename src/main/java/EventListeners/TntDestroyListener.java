@@ -88,4 +88,8 @@ public class TntDestroyListener implements Listener {
             e.getPlayer().sendMessage(ChatColor.GREEN + "Tnt fuze removed!");
         }
     }
+
+    public TntIterator getTntsIterator() {
+        return this.tnts.createIterator();
+    }
 }

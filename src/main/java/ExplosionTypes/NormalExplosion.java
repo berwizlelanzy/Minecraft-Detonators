@@ -20,6 +20,7 @@ public class NormalExplosion implements ExplosionType {
         this.getBlock().getWorld().createExplosion(x, y, z, 4F, false, true);
     }
 
+    @Override
     public NormalExplosion clone() {
         NormalExplosion clone = new NormalExplosion(block);
         return clone;

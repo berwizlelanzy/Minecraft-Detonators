@@ -28,7 +28,7 @@ public class Tnt implements Detonatable {
     }
 
     public void setExpType(ExplosionType type) {
-        this.memento.add(type);
+        this.memento.add(this.explosionType.clone());
         this.explosionType = type;
     }
 
