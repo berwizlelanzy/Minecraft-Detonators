@@ -10,6 +10,7 @@ import Fuzes.CodeFuze;
 import Fuzes.RemoteFuze;
 import Fuzes.Enums.FuzeType;
 import Remote.RemoteBroadcaster;
+import Remote.RemoteProxy;
 import Tnt.Tnt;
 import TntCollection.TntCollection;
 import TntCollection.TntElement;
@@ -41,7 +42,8 @@ public class TntDestroyListener implements Listener {
 
         if (tnt.getFuze() instanceof RemoteFuze) {
             RemoteBroadcaster broadcaster = RemoteBroadcaster.getInstance();
-            broadcaster.addRemote((RemoteFuze) tnt.getFuze());
+            RemoteProxy proxy = new RemoteProxy((RemoteFuze) tnt.getFuze());
+            broadcaster.addRemote(proxy);
         }
     }
 

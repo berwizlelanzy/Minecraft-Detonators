@@ -28,7 +28,7 @@ public class RemoteBroadcaster {
 
     public boolean removeRemote(RemoteObserver observer){
         for (int i = 0; i < this.observers.size(); i++) {
-            if (this.observers.get(i).equals(observer)) {
+            if (((RemoteProxy) this.observers.get(i)).getObserver().equals(observer)) {
                 this.observers.removeElementAt(i);
                 return true;
             }
