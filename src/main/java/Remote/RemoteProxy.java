@@ -2,8 +2,6 @@ package Remote;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import net.md_5.bungee.api.ChatColor;
-
 public class RemoteProxy implements RemoteObserver {
     private RemoteObserver observer;
 
