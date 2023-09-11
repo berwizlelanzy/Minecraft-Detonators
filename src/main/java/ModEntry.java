@@ -3,6 +3,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import CommandHandlers.*;
 import Commands.*;
 import EventListeners.*;
+import UI.UI;
 
 public class ModEntry extends JavaPlugin {
     @Override
@@ -39,6 +40,9 @@ public class ModEntry extends JavaPlugin {
         getCommand("changetype").setExecutor(changeTypeHandler);
         getCommand("undotype").setExecutor(undoTypeHandler);
         getCommand("detonateall").setExecutor(detonateAllHandler);
+
+        UI ui = new UI();
+        ui.createUI();
     }
     
     @Override
